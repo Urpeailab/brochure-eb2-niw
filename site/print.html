@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<title>URPE Integral Services — EB-2 NIW · Residencia por mérito propio</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+
+  :root{
+    --tinta:#0A0D14;
+    --tinta2:#121824;
+    --marfil:#F6F2E9;
+    --papel:#EFEADD;
+    --oro:#C0982E;
+    --oro-luz:#E0BE6A;
+    --oro-tinta:#8A6A1C;
+    --gris:#545B68;
+    --gris-claro:#A9B0BD;
+    --linea-osc:rgba(246,242,233,.16);
+    --linea-clr:rgba(20,24,31,.14);
+    --grad-oro:linear-gradient(180deg,#DCC079,#B8912B);
+    --grad-txt-dark:linear-gradient(180deg,#E9CF8E,#C39A32);
+    --grad-txt-light:linear-gradient(180deg,#B8912B,#7A5D16);
+  }
+
+  body{ font-family:"Avenir Next","Avenir",sans-serif; color:var(--tinta); background:#8a8a8a; }
+
+  .page{
+    width:210mm; height:297mm; position:relative; overflow:hidden;
+    page-break-after:always; display:flex; flex-direction:column;
+    padding:19mm 20mm 14mm 20mm;
+  }
+  .page:last-child{ page-break-after:auto; }
+  .body{ flex:1; display:flex; flex-direction:column; justify-content:space-between; padding:14mm 0 4mm 0; }
+  .body > .blk{ flex:none; }
+  .dark{ background:var(--tinta); color:var(--marfil); }
+  .light{ background:var(--marfil); color:var(--tinta); }
+  .paper{ background:var(--papel); color:var(--tinta); }
+
+  /* ---------- cabecera / folio ---------- */
+  .topbar{ display:flex; justify-content:space-between; align-items:baseline;
+    font-size:6.6pt; letter-spacing:.30em; text-transform:uppercase; }
+  .dark .topbar{ color:rgba(246,242,233,.50); }
+  .light .topbar,.paper .topbar{ color:rgba(20,24,31,.45); }
+  .topbar .mark{ color:var(--oro); }
+
+  .foot{ margin-top:auto; display:flex; justify-content:space-between; align-items:flex-end;
+    font-size:6.4pt; letter-spacing:.26em; text-transform:uppercase; padding-top:5mm; }
+  .dark .foot{ color:rgba(246,242,233,.38); border-top:.4pt solid var(--linea-osc); }
+  .light .foot,.paper .foot{ color:rgba(20,24,31,.38); border-top:.4pt solid var(--linea-clr); }
+  .folio{ font-size:8pt; letter-spacing:.1em; }
+  .dark .folio{ color:var(--oro); } .light .folio,.paper .folio{ color:var(--oro-tinta); }
+
+  /* ---------- tipografía ---------- */
+  .eyebrow{ font-size:7.4pt; letter-spacing:.34em; text-transform:uppercase; color:var(--oro); font-weight:600; }
+  .paper .eyebrow,.light .eyebrow{ color:var(--oro-tinta); }
+  h1,h2,h3,.didot{ font-family:"Didot","Bodoni 72",Georgia,serif; font-weight:400; }
+  h2{ font-size:31pt; line-height:1.1; letter-spacing:-.01em; margin-top:5mm; }
+  h2 em{ font-style:italic; color:var(--oro-luz); }
+  .light h2 em,.paper h2 em{ color:var(--oro-tinta); }
+  .lead{ font-size:10.5pt; line-height:1.62; max-width:150mm; margin-top:5mm; }
+  .dark .lead{ color:#CFD5DE; } .light .lead,.paper .lead{ color:var(--gris); }
+  .rule{ height:.4pt; background:var(--linea-clr); margin:7mm 0; }
+  .dark .rule{ background:var(--linea-osc); }
+  .rule-gold{ height:1pt; width:26mm; background:var(--oro); margin:6mm 0; }
+
+  /* ---------- portada ---------- */
+  .cover{ background:var(--tinta); }
+  .cover-glow{ position:absolute; width:150mm; height:150mm; right:-45mm; top:22mm;
+    background:radial-gradient(circle,rgba(192,152,46,.16) 0%,rgba(192,152,46,0) 68%); }
+  .cover-line{ position:absolute; left:20mm; top:0; width:.4pt; height:100%; background:linear-gradient(180deg,rgba(192,152,46,0),rgba(192,152,46,.5),rgba(192,152,46,0)); }
+  .cover-body{ position:relative; margin-top:44mm; }
+  .cover h1{ font-size:57pt; line-height:1.02; letter-spacing:-.015em; color:#fff; margin-top:8mm; }
+  .cover h1 .gold{ font-style:italic; color:var(--oro-luz); }
+  .cover .sub{ font-size:12pt; line-height:1.5; color:#C3CAD5; margin-top:8mm; max-width:128mm; font-weight:300; }
+  .cover-logo{ position:relative; margin-top:auto; }
+  .cover-logo img{ width:74mm; display:block; }
+  .cover-meta{ font-size:7pt; letter-spacing:.28em; text-transform:uppercase; color:rgba(246,242,233,.66); margin-top:7mm; }
+
+  /* ---------- datos / barras ---------- */
+  .charts{ display:grid; grid-template-columns:1fr .4pt 1fr; gap:0 11mm; margin-top:9mm; }
+  .chart-div{ background:var(--linea-clr); }
+  .chart-title{ font-size:9.4pt; font-weight:600; letter-spacing:-.005em; }
+  .chart-sub{ font-size:7.6pt; color:var(--gris); margin-top:1.5mm; }
+  .bars{ display:flex; align-items:flex-end; gap:7mm; height:47mm; margin-top:7mm; border-bottom:.4pt solid var(--linea-clr); }
+  .chart{ display:flex; align-items:flex-end; gap:14mm; height:52mm; margin-top:9mm; }
+  .bar-wrap{ flex:1; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; height:100%; }
+  .bar-val{ font-family:"Didot",Georgia,serif; font-size:16.5pt; margin-bottom:3mm; color:var(--tinta); }
+  .bar{ width:100%; max-width:34mm; background:linear-gradient(180deg,#DCC079,#B8912B); }
+  .bar.dim{ background:linear-gradient(180deg,#D6D0C2,#BDB6A6); }
+  .bar-year{ font-size:7.6pt; letter-spacing:.2em; color:var(--gris); margin-top:3mm; }
+  .axis{ height:.4pt; background:var(--linea-clr); margin-top:0; }
+  .source{ font-size:6.6pt; letter-spacing:.06em; color:rgba(20,24,31,.5); margin-top:4mm; line-height:1.5; }
+
+  .statement{ font-family:"Didot",Georgia,serif; font-size:17pt; line-height:1.35; margin-top:8mm; }
+  .statement .gold{ font-style:italic; color:var(--oro-tinta); }
+  .dark .statement .gold{ color:var(--oro-luz); }
+
+  /* ---------- tabla comparativa ---------- */
+  .vs{ display:grid; grid-template-columns:1fr 1fr; gap:0; margin-top:9mm; border-top:.4pt solid var(--linea-clr); }
+  .vs-head{ padding:5mm 6mm; font-size:7.6pt; letter-spacing:.24em; text-transform:uppercase; }
+  .vs-head.a{ color:var(--gris); border-right:.4pt solid var(--linea-clr); }
+  .vs-head.b{ color:var(--oro-tinta); font-weight:600; }
+  .vs-row{ padding:4.6mm 6mm; font-size:10pt; border-top:.4pt solid var(--linea-clr); display:flex; gap:4mm; align-items:baseline; }
+  .vs-row.a{ color:#7B818C; border-right:.4pt solid var(--linea-clr); }
+  .vs-row.b{ color:var(--tinta); background:rgba(192,152,46,.05); }
+  .vs-row .ic{ font-size:9pt; width:4mm; flex:none; }
+  .vs-row.a .ic{ color:#B0B5BE; } .vs-row.b .ic{ color:var(--oro-tinta); }
+
+  /* ---------- pilares ---------- */
+  .pillars{ margin-top:10mm; }
+  .pillar{ display:grid; grid-template-columns:26mm 1fr; gap:6mm; padding:7mm 0; border-top:.4pt solid var(--linea-osc); align-items:start; }
+  .pillar:last-child{ border-bottom:.4pt solid var(--linea-osc); }
+  .pillar .num{ font-family:"Didot",Georgia,serif; font-size:34pt; line-height:.8; color:var(--oro-luz); }
+  .pillar h3{ font-size:16pt; color:#fff; }
+  .pillar p{ font-size:9.6pt; line-height:1.6; color:#B9C0CB; margin-top:2.5mm; max-width:112mm; }
+
+  /* ---------- diferenciadores ---------- */
+  .feats{ margin-top:3mm; }
+  .feat{ display:grid; grid-template-columns:22mm 1fr; gap:6mm; padding:6.5mm 0; border-top:.4pt solid var(--linea-clr); align-items:start; }
+  .feat:last-child{ border-bottom:.4pt solid var(--linea-clr); }
+  .feat .num{ font-family:"Didot",Georgia,serif; font-size:29pt; line-height:.8; color:var(--oro-tinta); }
+  .feat .kicker{ font-size:6.8pt; letter-spacing:.26em; text-transform:uppercase; color:var(--oro-tinta); font-weight:600; }
+  .feat h3{ font-size:14.5pt; margin-top:1.6mm; }
+  .feat p{ font-size:9.2pt; line-height:1.58; color:var(--gris); margin-top:2.4mm; max-width:136mm; }
+
+  /* ---------- activos ---------- */
+  .assets-group{ margin-top:8mm; }
+  .ag-title{ font-size:7.4pt; letter-spacing:.28em; text-transform:uppercase; color:var(--oro-tinta); padding-bottom:3mm; border-bottom:.4pt solid var(--linea-clr); }
+  .ag-items{ display:grid; grid-template-columns:repeat(3,1fr); gap:7mm; margin-top:5mm; }
+  .ag-items h4{ font-size:10.5pt; font-weight:600; letter-spacing:-.01em; }
+  .ag-items p{ font-size:8.6pt; line-height:1.55; color:var(--gris); margin-top:2mm; }
+
+  /* ---------- planes ---------- */
+  .plans{ display:grid; grid-template-columns:1fr 1.08fr 1fr; gap:5mm; margin-top:7mm; align-items:stretch; }
+  .plan{ border:.5pt solid var(--linea-osc); padding:7mm 6mm; display:flex; flex-direction:column; position:relative; }
+  .plan.hero{ border:1pt solid var(--oro); background:linear-gradient(180deg,rgba(192,152,46,.10),rgba(192,152,46,.02)); }
+  .plan .tag{ position:absolute; top:-3mm; left:50%; transform:translateX(-50%); font-size:6.4pt; letter-spacing:.24em; text-transform:uppercase; color:var(--tinta); background:var(--grad-oro); padding:1.6mm 4mm; font-weight:600; white-space:nowrap; }
+  .plan .name{ font-size:8pt; letter-spacing:.24em; text-transform:uppercase; color:var(--gris-claro); min-height:9mm; }
+  .plan.hero .name{ color:var(--oro-luz); }
+  .plan .price{ font-family:"Didot",Georgia,serif; font-size:27pt; color:#fff; margin-top:3mm; letter-spacing:-.01em; }
+  .plan .price small{ font-size:11pt; color:var(--gris-claro); letter-spacing:.06em; margin-right:1.5mm; }
+  .plan .pitch{ font-size:8.4pt; line-height:1.5; color:#AEB6C2; margin-top:3.5mm; padding-bottom:4.5mm; border-bottom:.4pt solid var(--linea-osc); min-height:19mm; }
+  .plan ul{ list-style:none; margin-top:4.5mm; }
+  .plan li{ font-size:8.8pt; line-height:1.42; color:#DCE1E8; padding-left:5mm; position:relative; margin-bottom:3.4mm; }
+  .plan li:before{ content:"—"; position:absolute; left:0; color:var(--oro); }
+  .plan .carry{ font-size:8pt; color:var(--oro-luz); font-style:italic; margin-top:1mm; margin-bottom:1mm; }
+
+  /* ---------- CTA (ley de Fitts) ---------- */
+  .cta{ display:block; width:100%; background:var(--grad-oro); color:#0A0D14; text-decoration:none;
+    text-align:center; padding:6.4mm 4mm; font-size:11pt; font-weight:600; letter-spacing:.12em;
+    text-transform:uppercase; margin-top:7mm; }
+  .cta .sub{ display:block; font-size:7.4pt; font-weight:400; letter-spacing:.16em; margin-top:1.6mm; color:rgba(10,13,20,.72); }
+  .cta-note{ font-size:6.8pt; letter-spacing:.05em; text-align:center; margin-top:3mm; }
+  .dark .cta-note{ color:rgba(246,242,233,.45); } .light .cta-note{ color:rgba(20,24,31,.45); }
+
+  /* ---------- glosario entregables ---------- */
+  .gloss-cols{ display:grid; grid-template-columns:1fr 1fr; gap:0 9mm; margin-top:0; }
+  .gcat{ margin-top:4.5mm; }
+  .gcat > h4{ font-size:7pt; letter-spacing:.26em; text-transform:uppercase; color:var(--oro-tinta); padding-bottom:2mm; border-bottom:.4pt solid var(--linea-clr); }
+  .gitem{ padding:2.3mm 0; border-bottom:.3pt dotted rgba(20,24,31,.18); }
+  .gitem h5{ font-size:8.6pt; font-weight:600; letter-spacing:-.005em; }
+  .gitem p{ font-size:7.7pt; line-height:1.4; color:var(--gris); margin-top:.9mm; }
+
+  /* ---------- prueba ---------- */
+  .tests{ display:grid; grid-template-columns:1fr 1fr; gap:8mm; margin-top:8mm; }
+  .test img{ width:100%; display:block; border:.4pt solid var(--linea-clr); }
+  .test h4{ font-family:"Didot",Georgia,serif; font-size:15pt; margin-top:4mm; }
+  .test .role{ font-size:7.6pt; letter-spacing:.18em; text-transform:uppercase; color:var(--oro-tinta); margin-top:1.5mm; }
+  .test p{ font-size:8.8pt; line-height:1.55; color:var(--gris); margin-top:3mm; }
+  .metric-row{ display:flex; align-items:flex-end; gap:9mm; margin-top:9mm; padding-top:6mm; border-top:.4pt solid var(--linea-clr); }
+  .metric-big{ font-family:"Didot",Georgia,serif; font-size:44pt; line-height:.9; color:var(--oro-tinta); }
+  .metric-txt{ font-size:9.4pt; line-height:1.5; color:var(--gris); max-width:96mm; }
+  .metric-txt strong{ color:var(--tinta); font-weight:600; }
+  .seals{ display:flex; gap:5mm; margin-top:7mm; }
+  .seal{ border:.5pt solid var(--linea-clr); padding:3.4mm 5mm; font-size:7pt; letter-spacing:.18em; text-transform:uppercase; color:var(--gris); }
+  .legal{ font-size:6.6pt; line-height:1.5; color:rgba(20,24,31,.48); margin-top:5mm; }
+
+  /* ---------- liderazgo ---------- */
+  .leader{ display:grid; grid-template-columns:52mm 1fr; gap:8mm; margin-top:6mm; align-items:start; }
+  .leader img{ width:100%; display:block; }
+  .leader h3{ font-size:26pt; color:#fff; line-height:1.05; }
+  .leader .role{ font-size:8pt; letter-spacing:.22em; text-transform:uppercase; color:var(--oro); margin-top:3mm; }
+  .creds{ display:flex; flex-wrap:wrap; gap:2.5mm; margin-top:5mm; }
+  .cred{ border:.5pt solid rgba(192,152,46,.65); color:#EACB84; font-size:7pt; letter-spacing:.12em; text-transform:uppercase; padding:2mm 3.4mm; }
+  .leader p{ font-size:9.2pt; line-height:1.58; color:#C2C9D4; margin-top:4mm; }
+  .quote{ font-family:"Didot",Georgia,serif; font-size:12.5pt; line-height:1.38; color:#fff; margin-top:4.5mm; padding-left:5mm; border-left:1pt solid var(--oro); }
+  .team-band{ margin-top:auto; padding-top:5mm; }
+  .team-band img{ width:93%; margin:0 auto; display:block; border:.5pt solid rgba(192,152,46,.4); }
+  .team-stats{ display:flex; gap:10mm; margin-top:4mm; }
+  .team-stats div{ font-size:7.6pt; letter-spacing:.2em; text-transform:uppercase; color:var(--gris-claro); }
+  .team-stats b{ font-family:"Didot",Georgia,serif; font-size:15pt; letter-spacing:0; display:block; margin-bottom:1.2mm; font-weight:400; color:var(--oro-luz); }
+
+  /* ---------- acompañamiento ---------- */
+  .symptoms{ display:grid; grid-template-columns:repeat(3,1fr); gap:8mm; margin-top:5mm; }
+  .symptoms h4{ font-size:10pt; font-weight:600; color:#8B919B; }
+  .symptoms p{ font-size:8.6pt; line-height:1.5; color:#9AA0A9; margin-top:2mm; }
+  .promise{ display:grid; grid-template-columns:repeat(3,1fr); gap:8mm; margin-top:5mm; }
+  .promise .p-num{ font-family:"Didot",Georgia,serif; font-size:15pt; color:var(--oro-tinta); }
+  .promise h4{ font-size:11pt; font-weight:600; margin-top:3mm; }
+  .promise p{ font-size:8.8pt; line-height:1.55; color:var(--gris); margin-top:2.5mm; }
+  .principle{ border-top:.4pt solid var(--linea-clr); padding-top:7mm; }
+  .principle .q{ font-family:"Didot",Georgia,serif; font-size:16pt; line-height:1.4; }
+  .principle .who{ font-size:7pt; letter-spacing:.26em; text-transform:uppercase; color:var(--oro-tinta); margin-top:4mm; }
+
+  /* ---------- cierre ---------- */
+  .close-body{ margin-top:auto; margin-bottom:auto; }
+  .close h2{ font-size:42pt; line-height:1.08; color:#fff; }
+  .close h2 .gold{ font-style:italic; color:var(--oro-luz); }
+  .close .lead{ color:#C3CAD5; font-size:11pt; max-width:132mm; }
+  .contact{ margin-top:9mm; padding-top:6mm; border-top:.4pt solid var(--linea-osc); }
+  .contact .line{ display:flex; gap:9mm; flex-wrap:nowrap; align-items:baseline; font-size:9.2pt; color:#DCE1E8; white-space:nowrap; }
+  .contact .line b{ font-weight:400; color:var(--oro-luz); }
+  .contact .addr{ font-size:8.4pt; color:#98A0AC; margin-top:4mm; letter-spacing:.02em; }
+  .contact .lbl{ font-size:6.8pt; letter-spacing:.26em; text-transform:uppercase; color:rgba(246,242,233,.42); margin-bottom:3.5mm; }
+
+  /* ---------- anexo ---------- */
+  .cat{ margin-top:6.5mm; }
+  .cat h4{ font-size:7.4pt; letter-spacing:.28em; text-transform:uppercase; color:var(--oro-tinta); padding-bottom:2.5mm; border-bottom:.4pt solid var(--linea-clr); }
+  .cat .row{ display:flex; justify-content:space-between; font-size:9pt; padding:2.5mm 0; border-bottom:.3pt dotted rgba(20,24,31,.18); }
+  .cat .row span:last-child{ color:var(--oro-tinta); font-variant-numeric:tabular-nums; white-space:nowrap; padding-left:5mm; }
+  .cols2{ display:grid; grid-template-columns:1fr 1fr; gap:0 12mm; }
+</style>
+</head>
+<body>
+
+<!-- ══════════ 01 · PORTADA ══════════ -->
+<section class="page cover">
+  <div class="cover-glow"></div>
+  <div class="cover-line"></div>
+  <div class="topbar" style="position:relative;">
+    <div class="mark">URPE INTEGRAL SERVICES</div>
+    <div>Alpharetta · Georgia, EE. UU.</div>
+  </div>
+
+  <div class="cover-body">
+    <div class="eyebrow">EB-2 NIW · Edición 2026</div>
+    <h1>Residencia<br>por mérito <span class="gold">propio.</span></h1>
+    <div class="sub">No gestionamos una visa.<br>Estructuramos el caso —y la vida— que la sostienen.</div>
+  </div>
+
+  <div class="cover-logo">
+    <img src="assets/logo-metal.png" alt="URPE Integral Services">
+    <div class="cover-meta">Legaltech · Migración por mérito · BBB Accredited · Calificación A</div>
+  </div>
+</section>
+
+<!-- ══════════ 02 · EL CONTEXTO ══════════ -->
+<section class="page light">
+  <div class="topbar"><div class="mark">URPE INTEGRAL SERVICES</div><div>EB-2 NIW</div></div>
+  <div class="body">
+    <div class="eyebrow">01 — El contexto</div>
+    <h2>El estándar subió.<br>Hoy decide <em>la evidencia.</em></h2>
+    <div class="lead">La EB-2 NIW no se aprueba por tener un buen perfil. Se aprueba cuando ese perfil se convierte en un Proyecto de Interés Nacional defendible, sustentado con evidencia objetiva. Cuando la demanda sube, el filtro se endurece.</div>
+
+    <div class="charts">
+      <div class="chart-box">
+        <div class="chart-title">Tasa de aprobación I-140 NIW</div>
+        <div class="chart-sub">El estándar subió: hoy la evidencia pesa más</div>
+        <div class="bars">
+          <div class="bar-wrap"><div class="bar-val">79.6%</div><div class="bar" style="height:100%"></div><div class="bar-year">FY 2023</div></div>
+          <div class="bar-wrap"><div class="bar-val">71.0%</div><div class="bar" style="height:89%"></div><div class="bar-year">FY 2024</div></div>
+          <div class="bar-wrap"><div class="bar-val">55.2%</div><div class="bar dim" style="height:69%"></div><div class="bar-year">FY 2025</div></div>
+        </div>
+      </div>
+      <div class="chart-div"></div>
+      <div class="chart-box">
+        <div class="chart-title">Peticiones EB-2 NIW recibidas</div>
+        <div class="chart-sub">Volumen histórico — aumento sostenido</div>
+        <div class="bars">
+          <div class="bar-wrap"><div class="bar-val">39,803</div><div class="bar" style="height:60%"></div><div class="bar-year">FY 2023</div></div>
+          <div class="bar-wrap"><div class="bar-val">63,549</div><div class="bar" style="height:96%"></div><div class="bar-year">FY 2024</div></div>
+          <div class="bar-wrap"><div class="bar-val">66,276</div><div class="bar" style="height:100%"></div><div class="bar-year">FY 2025</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="statement">En dos años la aprobación cayó 24 puntos.<br>En el primer semestre de 2026 hubo <span class="gold">más negaciones que aprobaciones.</span></div>
+    <div class="source">Fuente: USCIS, <i>Form I-140, Immigrant Petition for Alien Worker — By Fiscal Year, Quarter, and Case Status</i>, fila “National Interest Waiver (NIW)”. Años fiscales federales completos (1 de octubre – 30 de septiembre). Tasa calculada como aprobadas ÷ (aprobadas + denegadas); no incluye peticiones pendientes de decisión. Archivos FY2023 Q4, FY2024 Q4 y FY2025 Q4. Datos de FY2026 correspondientes a los dos primeros trimestres (1-oct-2025 a 31-mar-2026): 5,410 aprobadas frente a 6,486 denegadas; el año fiscal no ha concluido. Consultado el 21 de agosto de 2026.</div>
+  </div>
+  <div class="foot"><div>URPE Integral Services · Legaltech</div><div class="folio">02</div></div>
+</section>
+
+<!-- ══════════ 03 · LA DIFERENCIA ══════════ -->
+<section class="page paper">
+  <div class="topbar"><div class="mark">URPE INTEGRAL SERVICES</div><div>EB-2 NIW</div></div>
+  <div class="body">
+    <div class="eyebrow">02 — La diferencia</div>
+    <h2>Dos expedientes.<br>Un resultado <em>distinto.</em></h2>
+    <div class="lead">El mismo profesional, con la misma trayectoria, puede recibir una negación o una aprobación. Lo que cambia no es el talento: es cómo está construido el argumento.</div>
+
+    <div class="vs">
+      <div class="vs-head a">Un caso común</div>
+      <div class="vs-head b">Un caso blindado</div>
+
+      <div class="vs-row a"><span class="ic">×</span>Títulos académicos</div>
+      <div class="vs-row b"><span class="ic">✓</span>Proyecto con impacto medible</div>
+
+      <div class="vs-row a"><span class="ic">×</span>Experiencia laboral</div>
+      <div class="vs-row b"><span class="ic">✓</span>Evidencia técnica estructurada</div>
+
+      <div class="vs-row a"><span class="ic">×</span>Cartas genéricas</div>
+      <div class="vs-row b"><span class="ic">✓</span>Cartas de experto especializadas</div>
+
+      <div class="vs-row a"><span class="ic">×</span>Formularios llenados</div>
+      <div class="vs-row b"><span class="ic">✓</span>Negocio constituido y operando</div>
+
+      <div class="vs-row a"><span class="ic">×</span>Sin evidencia de impacto</div>
+      <div class="vs-row b"><span class="ic">✓</span>Validación gubernamental</div>
+    </div>
+
+    <div class="statement" style="margin-top:10mm;">La diferencia entre un rechazo y una aprobación<br><span class="gold">es la estructura del argumento.</span></div>
+  </div>
+  <div class="foot"><div>URPE Integral Services · Legaltech</div><div class="folio">03</div></div>
+</section>
+
+<!-- ══════════ 04 · EL MÉTODO ══════════ -->
+<section class="page dark">
+  <div class="topbar"><div class="mark">URPE INTEGRAL SERVICES</div><div>EB-2 NIW</div></div>
+  <div class="body">
+    <div class="eyebrow">03 — El método</div>
+    <h2 style="color:#fff;">El Sistema <em>URPE</em></h2>
+    <div class="lead">No preparamos solicitudes. Diseñamos estructuras probatorias. Tres etapas, en este orden, sin excepción.</div>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="num">01</div>
+        <div>
+          <h3>Estructura</h3>
+          <p>Diagnóstico técnico bajo criterios objetivos y arquitectura del Proyecto de Interés Nacional: tu trayectoria profesional convertida en un proyecto con impacto claro y defendible.</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="num">02</div>
+        <div>
+          <h3>Evidencia</h3>
+          <p>Construcción probatoria avanzada. Cada documento y cada entregable cumple una función estratégica dentro del expediente. Nada se incluye por volumen; todo se incluye por argumento.</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="num">03</div>
+        <div>
+          <h3>Ejecución</h3>
+          <p>Radicación del I-140, ajuste de estatus y seguimiento activo hasta la Green Card. Si llega una solicitud de evidencia adicional, se responde elevando el nivel probatorio, no repitiendo lo enviado.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="statement" style="color:#fff; margin-top:9mm;">“La evidencia no se improvisa. <span class="gold">Se construye con método.”</span></div>
+  </div>
+  <div class="foot"><div>URPE Integral Services · Legaltech</div><div class="folio">04</div></div>
+</section>
+
+<!-- ══════════ 05 · SOLO EN URPE ══════════ -->
+<section class="page paper">
+  <div class="topbar"><div class="mark">URPE INTEGRAL SERVICES</div><div>EB-2 NIW</div></div>
+  <div class="body">
+    <div class="blk">
+      <div class="eyebrow">04 — Solo en URPE</div>
+      <h2>Lo que nadie más<br>pone sobre la <em>mesa.</em></h2>
+      <div class="lead">Acompañar un caso lo ofrece cualquiera. Estas tres piezas son estructurales en el sistema URPE — y las tres se pueden verificar.</div>
+    </div>
+
+    <div class="blk feats">
+      <div class="feat">
+        <div class="num">01</div>
+        <div>
+          <div class="kicker">Validación gubernamental</div>
+          <h3>El gobierno opina primero.</h3>
+          <p>Antes de construir tu Proyecto de Interés Nacional, gestionamos el visto bueno de gobernaciones, alcaldías y oficinas de gobierno: pronunciamientos oficiales, por escrito, que respaldan la utilidad del proyecto. Tu expediente no le pide a USCIS que crea en el proyecto — le muestra instituciones públicas que ya lo respaldaron.</p>
+        </div>
+      </div>
+      <div class="feat">
+        <div class="num">02</div>
+        <div>
+          <div class="kicker">App móvil propia</div>
+          <h3>Tu expediente, en tiempo real.</h3>
+          <p>URPE tiene aplicación propia en iOS y Android. Desde tu teléfono ves la preparación de tu expediente en vivo: en qué etapa va, qué entregables están listos y qué sigue, con notificación al instante. En una industria donde lo normal es esperar semanas por una respuesta, tú lo ves en tiempo real.</p>
+        </div>
+      </div>
+      <div class="feat">
+        <div class="num">03</div>
+        <div>
+          <div class="kicker">Medios y visibilidad</div>
+          <h3>Tu nombre, publicado.</h3>
+          <p>Contamos con alianzas en medios de comunicación de primer nivel para darle visibilidad real a tu perfil y a tu empresa: publicaciones de prensa, posicionamiento público verificable y presencia en pantallas de Times Square, en Nueva York. La autoridad que exige un expediente de interés nacional no se declara: se publica.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="blk statement">Las promesas no se radican.<br><span class="gold">La evidencia, sí.</span></div>
+  </div>
+  <div class="foot"><div>URPE Integral Services · Legaltech</div><div class="folio">05</div></div>
+</section>
+
+<!-- ══════════ 06 · ACTIVOS ══════════ -->
+<section class="page light">
+  <div class="topbar"><div class="mark">URPE INTEGRAL SERVICES</div><div>EB-2 NIW</div></div>
+  <div class="body">
+    <div class="eyebrow">05 — Lo que te pertenece</div>
+    <h2>Al final del proceso,<br>tienes algo <em>tuyo.</em></h2>
+    <div class="lead">La evidencia que sustenta tu petición no es papel desechable: son activos reales que siguen siendo tuyos, decida lo que decida USCIS.</div>
+
+    <div class="assets-group">
+      <div class="ag-title">Empresa en operación</div>
+      <div class="ag-items">
+        <div><h4>Sociedad constituida</h4><p>LLC o Corp operando en Estados Unidos, con cuenta bancaria empresarial activa.</p></div>
+        <div><h4>Marca profesional</h4><p>Logo, brand book, identidad visual, sitio web, dominio y correo corporativo.</p></div>
+        <div><h4>Prospectos verificables</h4><p>Campaña activa que genera clientes potenciales reales para tu negocio.</p></div>
+      </div>
+    </div>
+
+    <div class="assets-group" style="margin-top:11mm;">
+      <div class="ag-title">Autoridad construida</div>
+      <div class="ag-items">
+        <div><h4>Propiedad intelectual</h4><p>Patente, libro publicado con ISBN, software o aplicación funcional según el plan.</p></div>
+        <div><h4>Validación institucional</h4><p>Vistos buenos por escrito de gobernaciones, alcaldías y oficinas de gobierno que respaldan tu proyecto.</p></div>
+        <div><h4>Posicionamiento público</h4><p>Prensa aliada, presencia en Times Square y autoridad verificable en tu industria.</p></div>
+      </div>
+    </div>
+
+    <div class="statement" style="margin-top:12mm;">“Incluso antes de que USCIS tome una decisión,<br><span class="gold">tú ya tienes algo tangible.”</span></div>
+  </div>
+  <div class="foot"><div>URPE Integral Services · Legaltech</div><div class="folio">06</div></div>
+</section>
+
+<!-- ══════════ 06 · PLANES ══════════ -->
+<section class="page dark">
+  <div class="topbar"><div class="mark">URPE INTEGRAL SERVICES</div><div>EB-2 NIW</div></div>
+  <div class="body">
+    <div class="eyebrow">06 — Inversión</div>
+    <h2 style="color:#fff; font-size:28pt;">Tres caminos.<br>Un solo <em>destino.</em></h2>
+
+    <div class="plans">
+      <div class="plan">
+        <div class="name">NIW Foundation</div>
+        <div class="price"><small>USD</small>5,000</div>
+        <div class="pitch">La puerta de entrada. Se acredita íntegramente si haces upgrade.</div>
+        <ul>
+          <li>Evaluación de elegibilidad</li>
+          <li>Empresa constituida y cuenta bancaria</li>
+          <li>Marca, web, dominio y correo corporativo</li>
+          <li>Business plan, ICP y campaña activa</li>
+          <li>Carta de autopetición e I-140 listo para radicar<sup>1</sup></li>
+        </ul>
+      </div>
+
+      <div class="plan hero">
+        <div class="tag">Más elegido</div>
+        <div class="name">NIW 360 · Residencia</div>
+        <div class="price"><small>USD</small>10,000</div>
+        <div class="pitch">La solución integral: negocio, evidencia, expediente y residencia.</div>
+        <div class="carry">Todo el Foundation, más:</div>
+        <ul>
+          <li>Cartas de experto y de recomendación</li>
+          <li>Petition Letter + I-140 con control de calidad</li>
+          <li>Government Evaluation Package</li>
+          <li>Prensa, Knowledge Panel y embudo propio</li>
+          <li>Radicación y ajuste de estatus</li>
+        </ul>
+      </div>
+
+      <div class="plan">
+        <div class="name">Signature · Familia</div>
+        <div class="price"><small>USD</small>17,000</div>
+        <div class="pitch">Máximo posicionamiento. Familia incluida, autoridad construida.</div>
+        <div class="carry">Todo el NIW 360, más:</div>
+        <ul>
+          <li>Libro publicado con ISBN</li>
+          <li>Patente y caso de estudio</li>
+          <li>Estudio econométrico y validación de mercado</li>
+          <li>Aplicación móvil o software funcional</li>
+          <li>Residencia familiar completa</li>
+        </ul>
+      </div>
+    </div>
+
+    <a class="cta" href="https://urpeintegralservices.co/agendar-cita.html">Agenda tu evaluación de perfil
+      <span class="sub">Sin costo · Sin compromiso · Basada en criterios USCIS reales</span></a>
+    <div class="cta-note"><sup>1</sup> La radicación del I-140 en Foundation se activa con las cartas de experto y recomendación, o con el upgrade a NIW 360. Las traducciones certificadas son requeridas para radicar y se cotizan por volumen.</div>
+  </div>
+  <div class="foot"><div>URPE Integral Services · Legaltech</div><div class="folio">07</div></div>
+</section>
+
+<!-- ══════════ 08 · ENTREGABLES ══════════ -->
+<section class="page paper">
+  <div class="topbar"><div class="mark">URPE INTEGRAL SERVICES</div><div>EB-2 NIW</div></div>
+  <div class="body" style="padding-top:8mm; justify-content:flex-start;">
+    <div class="eyebrow">07 — Los entregables</div>
+    <h2 style="font-size:24pt;">Cada pieza tiene un <em>porqué.</em></h2>
+    <div class="lead" style="font-size:9.4pt; margin-top:3mm;">Ningún entregable entra a tu expediente por volumen. Esto es lo que cada uno es — y lo que hace por tu caso.</div>
+
+    <div class="gloss-cols" style="margin-top:3mm;">
+      <div>
+        <div class="gcat">
+          <h4>El negocio</h4>
+          <div class="gitem"><h5>Evaluación de elegibilidad</h5><p>Diagnóstico de tu perfil bajo los criterios reales de USCIS, antes de invertir. Desde el día uno sabes si tu caso es viable y qué le falta.</p></div>
+          <div class="gitem"><h5>Empresa constituida y cuenta bancaria</h5><p>Tu LLC o Corp operando en Estados Unidos. El proyecto deja de ser una intención: existe, opera y factura dentro de su economía.</p></div>
+          <div class="gitem"><h5>Marca profesional</h5><p>Logo, brand book, sitio web, dominio y correo corporativo. Cuando el oficial busca tu proyecto, encuentra una empresa real y coherente.</p></div>
+          <div class="gitem"><h5>Business plan</h5><p>Modelo de negocio, mercado, proyecciones y empleos a generar. La columna vertebral del mérito sustancial de tu proyecto.</p></div>
+          <div class="gitem"><h5>ICP y campaña activa</h5><p>Tu cliente ideal definido y una campaña generando prospectos reales. La demanda se demuestra con datos, no se declara.</p></div>
+        </div>
+        <div class="gcat">
+          <h4>El expediente</h4>
+          <div class="gitem"><h5>Carta de autopetición</h5><p>Tu declaración formal como autopeticionario: quién eres, qué propones y por qué le sirve a Estados Unidos, en el lenguaje que USCIS espera leer.</p></div>
+          <div class="gitem"><h5>Petition Letter e I-140 con control de calidad</h5><p>El argumento legal que hila toda la evidencia con los criterios del precedente, y el formulario radicable con doble revisión. Es lo primero que el oficial lee.</p></div>
+          <div class="gitem"><h5>Cartas de experto</h5><p>Especialistas de tu industria sustentan la importancia de tu proyecto. USCIS pondera quién lo dice tanto como qué se dice.</p></div>
+          <div class="gitem"><h5>Cartas de recomendación</h5><p>Tu trayectoria contada por terceros con nombre y cargo. La experiencia se vuelve evidencia, no autoelogio.</p></div>
+          <div class="gitem"><h5>Radicación y ajuste de estatus</h5><p>Presentamos el expediente, gestionamos el ajuste hasta la Green Card y respondemos cualquier requerimiento elevando el nivel probatorio.</p></div>
+          <div class="gitem"><h5>Residencia familiar</h5><p>El ajuste de estatus de tu cónyuge e hijos, incluido. La Green Card es de la familia, no solo tuya.</p></div>
+        </div>
+      </div>
+      <div>
+        <div class="gcat">
+          <h4>La autoridad</h4>
+          <div class="gitem"><h5>Government Evaluation Package</h5><p>Vistos buenos por escrito de gobernaciones, alcaldías y oficinas de gobierno sobre tu proyecto. La evidencia más difícil de conseguir — y la más difícil de ignorar.</p></div>
+          <div class="gitem"><h5>Prensa, Knowledge Panel y Times Square</h5><p>Medios aliados publican tu proyecto, Google te reconoce como entidad y tu marca llega a pantallas de Nueva York. Autoridad pública verificable.</p></div>
+          <div class="gitem"><h5>Libro publicado con ISBN</h5><p>Tu conocimiento convertido en obra registrada. Pocas piezas comunican “experto” con tanta contundencia — y queda tuya para siempre.</p></div>
+          <div class="gitem"><h5>Patente</h5><p>Protección formal de tu método o innovación. Evidencia dura de que tu aporte es original y tiene valor más allá de ti.</p></div>
+          <div class="gitem"><h5>Estudio econométrico y validación de mercado</h5><p>El impacto de tu proyecto en cifras: empleos, derrama económica, demanda real. La importancia nacional pasa de adjetivo a número.</p></div>
+          <div class="gitem"><h5>Caso de estudio</h5><p>Resultados reales de tu método, documentados con rigor. Prueba aplicada de que lo que propones ya funciona.</p></div>
+          <div class="gitem"><h5>Aplicación móvil o software</h5><p>Tu servicio convertido en producto tecnológico funcional. Escala el proyecto y eleva el perfil innovador del expediente.</p></div>
+        </div>
+        <div class="statement" style="font-size:13.5pt; margin-top:8mm;">Cada entregable responde una pregunta que USCIS <span class="gold">va a hacer de todos modos.</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><div>URPE Integral Services · Legaltech</div><div class="folio">08</div></div>
+</section>
+
+<!-- ══════════ 09 · PRUEBA ══════════ -->
+<section class="page light">
+  <div class="topbar"><div class="mark">URPE INTEGRAL SERVICES</div><div>EB-2 NIW</div></div>
+  <div class="body">
+    <div class="eyebrow">08 — Resultados</div>
+    <h2>Casos aprobados,<br>no <em>promesas.</em></h2>
+
+    <div class="tests">
+      <div class="test">
+        <img src="assets/testimonio-juliana.jpg" alt="Testimonio de Juliana Carvajal">
+        <h4>Juliana Carvajal</h4>
+        <div class="role">Abogada · EB-2 NIW aprobada</div>
+        <p>Cuenta cómo vivió la preparación de su caso y el acompañamiento recibido durante todo el proceso.</p>
+      </div>
+      <div class="test">
+        <img src="assets/testimonio-angela.jpg" alt="Testimonio de Ángela Becerra">
+        <h4>Ángela Becerra</h4>
+        <div class="role">Ingeniera · EB-2 NIW aprobada</div>
+        <p>Comparte su experiencia desde la estructuración de su perfil profesional hasta la aprobación de su petición.</p>
+      </div>
+    </div>
+
+    <div class="metric-row">
+      <div>
+        <div class="metric-big">93.7<span style="font-size:24pt">%</span></div>
+        <div style="font-size:7.4pt; letter-spacing:.2em; text-transform:uppercase; color:var(--oro-tinta); margin-top:3mm;">URPE · histórico interno</div>
+      </div>
+      <div style="width:.4pt; align-self:stretch; background:var(--linea-clr);"></div>
+      <div>
+        <div class="metric-big" style="color:#9EA5B0; font-size:34pt;">55.2<span style="font-size:19pt">%</span></div>
+        <div style="font-size:7.4pt; letter-spacing:.2em; text-transform:uppercase; color:var(--gris); margin-top:3mm;">Promedio nacional · FY 2025</div>
+      </div>
+      <div class="metric-txt" style="align-self:center;"><strong>La misma visa. Dos resultados distintos.</strong> No es marketing: es lo que produce método, estructura y evidencia verificable en cada expediente.</div>
+    </div>
+
+    <div class="seals">
+      <div class="seal">BBB Accredited Business · Calificación A</div>
+      <div class="seal">Oficina propia · Alpharetta, Georgia</div>
+    </div>
+    <div class="legal">Cada caso es único y se evalúa individualmente. Los testimonios y resultados anteriores no constituyen garantía de resultados futuros. La tasa de 93.7% corresponde al histórico interno de expedientes radicados por URPE Integral Services. El promedio nacional proviene de datos públicos de USCIS (Form I-140, NIW, año fiscal 2025) y se calcula sobre peticiones decididas.</div>
+  </div>
+  <div class="foot"><div>URPE Integral Services · Legaltech</div><div class="folio">09</div></div>
+</section>
+
+<!-- ══════════ 08 · LIDERAZGO ══════════ -->
+<section class="page dark">
+  <div class="topbar"><div class="mark">URPE INTEGRAL SERVICES</div><div>EB-2 NIW</div></div>
+  <div class="body" style="padding-top:8mm;">
+    <div class="eyebrow">09 — Quién responde</div>
+
+    <div class="leader">
+      <img src="assets/diego.jpg" alt="Diego Urquijo">
+      <div>
+        <h3>Diego<br>Urquijo</h3>
+        <div class="role">Fundador y Presidente</div>
+        <div class="creds">
+          <div class="cred">MIT · IA para empresarios</div>
+          <div class="cred">Congreso EE. UU.</div>
+          <div class="cred">Honoris Causa</div>
+        </div>
+        <p>Llegó a Estados Unidos como inmigrante y entendió algo temprano: el mérito importa, pero la estructura lo es todo. Estudió derecho y completó el programa de Inteligencia Artificial para Empresarios del MIT, integrando visión jurídica con tecnología aplicada. Reconocido por el Congreso de los Estados Unidos y distinguido con título Honoris Causa.</p>
+        <div class="quote">“URPE no nació como una oficina migratoria. Nació como una estructura técnica diseñada para cumplir estándares altos.”</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="team-band">
+    <img src="assets/mosaico-print.jpg" alt="Equipo URPE Integral Services — 40+ profesionales">
+    <div class="team-stats">
+      <div><b>40+</b>Profesionales</div>
+      <div><b>5</b>Disciplinas</div>
+      <div><b>Atlanta metro</b>Alpharetta, Georgia</div>
+      <div style="flex:1; text-transform:none; letter-spacing:0; font-size:8.2pt; line-height:1.45; color:#AEB6C2;">Paralegales, estrategas legales, comunicación, psicología aplicada y tecnología. Cada caso se trabaja de forma colectiva, con controles de calidad antes de radicar.</div>
+    </div>
+  </div>
+  <div class="foot"><div>URPE Integral Services · Legaltech</div><div class="folio">10</div></div>
+</section>
+
+<!-- ══════════ 09 · ACOMPAÑAMIENTO ══════════ -->
+<section class="page light">
+  <div class="topbar"><div class="mark">URPE INTEGRAL SERVICES</div><div>EB-2 NIW</div></div>
+  <div class="body">
+    <div class="blk">
+      <div class="eyebrow">10 — Durante el proceso</div>
+      <h2>El silencio no es<br>parte del <em>servicio.</em></h2>
+      <div class="lead">Pagar y desaparecer es el patrón que más se repite en esta industria: sin actualizaciones, sin respuestas, sin saber si el caso avanza. En URPE eso no ocurre, y no depende de la buena voluntad de nadie: está en el sistema.</div>
+    </div>
+
+    <div class="blk">
+      <div class="ag-title" style="color:var(--gris);">El patrón que ya conoces</div>
+      <div class="symptoms">
+        <div><h4>Sin actualizaciones</h4><p>Ningún reporte sobre en qué etapa está tu expediente.</p></div>
+        <div><h4>Asesor que no responde</h4><p>Mensajes sin contestar por días. Nadie da la cara cuando hay dudas.</p></div>
+        <div><h4>Documentos sin contexto</h4><p>Te piden papeles cada varios meses, sin hoja de ruta clara.</p></div>
+      </div>
+    </div>
+
+    <div class="blk">
+      <div class="ag-title">Lo que ocurre en URPE</div>
+      <div class="promise">
+        <div>
+          <div class="p-num">01</div>
+          <h4>Tu caso, en tiempo real</h4>
+          <p>App móvil propia en iOS y Android, para clientes activos: tu expediente en vivo, etapa por etapa, notificado al instante.</p>
+        </div>
+        <div>
+          <div class="p-num">02</div>
+          <h4>Tu asesor, directo</h4>
+          <p>Chat con el asesor asignado, sin intermediarios. Respuesta en un máximo de 24 horas.</p>
+        </div>
+        <div>
+          <div class="p-num">03</div>
+          <h4>Todo trazable</h4>
+          <p>Documentos descargables y registro completo de cada acción. Nada se pierde.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="blk principle">
+      <div class="q">“No prometemos lo que no podemos cumplir.<br>Si algo se atrasa, lo avisamos <span style="color:var(--oro-tinta); font-style:italic;">antes</span> del plazo.”</div>
+      <div class="who">Integridad de la palabra — principio URPE</div>
+    </div>
+  </div>
+  <div class="foot"><div>URPE Integral Services · Legaltech</div><div class="folio">11</div></div>
+</section>
+
+<!-- ══════════ 10 · CIERRE ══════════ -->
+<section class="page dark close">
+  <div class="cover-glow" style="right:-60mm; top:60mm;"></div>
+  <div class="topbar" style="position:relative;"><div class="mark">URPE INTEGRAL SERVICES</div><div>Alpharetta · Georgia, EE. UU.</div></div>
+
+  <div class="close-body" style="position:relative;">
+    <div class="eyebrow">El siguiente paso</div>
+    <h2>Tu talento ya está<br>en Estados Unidos.<br><span class="gold">Falta la estructura.</span></h2>
+    <div class="lead">Una evaluación de perfil, sin costo, bajo criterios USCIS reales. Al final sabrás exactamente dónde estás parado y qué necesita tu caso para ser defendible.</div>
+    <a class="cta" href="https://urpeintegralservices.co/agendar-cita.html" style="margin-top:10mm;">Agenda tu evaluación de perfil
+      <span class="sub">Sin costo · Sin compromiso · Basada en criterios USCIS reales</span></a>
+    <div class="contact">
+      <div class="lbl">Contacto directo</div>
+      <div class="line"><div><a href="tel:+14707404568" style="text-decoration:none; color:inherit;"><b>+1 470 740 4568</b></a></div><div><a href="mailto:info@urpeintegralservices.co" style="text-decoration:none; color:inherit;">info@urpeintegralservices.co</a></div><div><a href="https://urpeintegralservices.co" style="text-decoration:none; color:inherit;">urpeintegralservices.co</a></div></div>
+      <div class="addr">3235 North Point Pkwy, STE 101 · Alpharetta, GA 30005 · Lunes a viernes, 9:00 a 18:00 EST</div>
+    </div>
+  </div>
+
+  <div style="position:relative; margin-top:auto;">
+    <img src="assets/logo-metal.png" style="width:52mm; display:block;" alt="URPE Integral Services">
+    <div class="cover-meta" style="margin-top:5mm;">Evidencia sobre intención · Estructura sobre incertidumbre</div>
+  </div>
+  <div class="foot" style="position:relative;"><div>URPE Integral Services · Legaltech</div><div class="folio">12</div></div>
+</section>
+
+<!-- ══════════ 11 · ANEXO ══════════ -->
+<section class="page paper">
+  <div class="topbar"><div class="mark">URPE INTEGRAL SERVICES</div><div>Anexo · Servicios individuales</div></div>
+  <div class="body">
+    <div class="eyebrow">Anexo</div>
+    <h2 style="font-size:26pt;">Si ya recorriste<br>parte del <em>camino.</em></h2>
+    <div class="lead" style="font-size:9.6pt; margin-top:4mm;">Si ya cuentas con empresa, proyecto o evidencia parcial, no pagas por lo que ya construiste. Tu asesor arma el plan exacto para tu situación.</div>
+
+    <div class="cols2" style="margin-top:2mm;">
+      <div>
+        <div class="cat">
+          <h4>Estructura empresarial</h4>
+          <div class="row"><span>Business plan empresarial</span><span>USD 1,800</span></div>
+          <div class="row"><span>Brand book + web</span><span>USD 1,500</span></div>
+          <div class="row"><span>ICP + plan de marketing</span><span>USD 950</span></div>
+          <div class="row"><span>Landing page + embudo</span><span>USD 900</span></div>
+          <div class="row"><span>Gestión de campaña (1 mes)</span><span>USD 850</span></div>
+          <div class="row"><span>Configuración Google / Meta Ads</span><span>USD 500</span></div>
+        </div>
+        <div class="cat">
+          <h4>Evidencia técnica</h4>
+          <div class="row"><span>Patente fortalecida</span><span>USD 1,800</span></div>
+          <div class="row"><span>Estudio econométrico</span><span>USD 1,500</span></div>
+          <div class="row"><span>Government Evaluation Package</span><span>USD 1,250</span></div>
+          <div class="row"><span>Libro publicado con ISBN</span><span>USD 1,200</span></div>
+          <div class="row"><span>Informe validación de mercado</span><span>USD 850</span></div>
+          <div class="row"><span>Caso de estudio</span><span>USD 750</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="cat">
+          <h4>Expediente migratorio</h4>
+          <div class="row"><span>Petition Letter + I-140 + QA</span><span>USD 3,000</span></div>
+          <div class="row"><span>Ajuste de estatus — principal</span><span>USD 2,500</span></div>
+          <div class="row"><span>Carta de experto</span><span>USD 850</span></div>
+          <div class="row"><span>Pack cartas de recomendación</span><span>USD 750</span></div>
+          <div class="row"><span>Ajuste por derivado</span><span>USD 750 / persona</span></div>
+          <div class="row"><span>Traducciones y acreditaciones</span><span>Por volumen</span></div>
+        </div>
+        <div class="cat">
+          <h4>Autoridad pública</h4>
+          <div class="row"><span>Aplicación móvil / software</span><span>desde USD 3,500</span></div>
+          <div class="row"><span>Google Knowledge Panel</span><span>USD 1,500</span></div>
+          <div class="row"><span>Prensa especializada</span><span>USD 1,200</span></div>
+          <div class="row"><span>Gestión de premios</span><span>USD 750</span></div>
+          <div class="row"><span>Times Square — evidencia audiovisual</span><span>USD 750</span></div>
+          <div class="row"><span>Consultoría estratégica (1 hora)</span><span>USD 350</span></div>
+        </div>
+      </div>
+    </div>
+
+    <a class="cta" href="https://urpeintegralservices.co/agendar-cita.html" style="margin-top:9mm;">Agenda tu evaluación de perfil
+      <span class="sub">Tu asesor diseña el plan exacto para tu situación</span></a>
+  </div>
+  <div class="foot"><div>URPE Integral Services · Legaltech</div><div class="folio">13</div></div>
+</section>
+
+</body>
+</html>
